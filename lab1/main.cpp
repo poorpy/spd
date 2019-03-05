@@ -1,10 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <vector>
 
 struct rpq {
     int r,p,q;
 };
+
 bool q_comp(const rpq& left, const rpq& right ) { return left.q > right.q; }
 bool r_comp(const rpq& left, const rpq& right ) { return left.r < right.r; }
 
@@ -15,30 +17,28 @@ int main(){
     int N;
     std::string str;
 
-    while (str != "data.1") {fs >> str;}
-
-    str = "";
-
-    while (str != "data.1") {fs >> str;}
+    while (str != "data.2") {fs >> str;}
 
     fs >> N;
 
-     rpq m_rpq[N];
-
+    std::vector<rpq> rpq_vec(N);
 
     for(int i=0; i<N; ++i){
-        fs >> m_rpq[i].r >> m_rpq[i].p >> m_rpq[i].q;
+        fs >> rpq_vec[i].r >> rpq_vec[i].p >> rpq_vec[i].q;
     }
 
-    std::sort(m_rpq, m_rpq+N, r_comp);
+    for(int i=0; i<(N/4)+1; ++i){
+        std::sort(rpq_vec.begin()+i, rpq_vec.end()-i, r_comp);
+        std::sort(rpq_vec.begin()+i+1, rpq_vec.end()-i, q_comp);
+        std::sort(rpq_vec.begin()+i+1, rpq_vec.end()-i-1, r_comp);
+    }
 
-
-    int m=m_rpq[0].r + m_rpq[0].p, c=m+m_rpq[0].q;
+    int m=rpq_vec[0].r + rpq_vec[0].p, c=m+rpq_vec[0].q;
 
     for(int i=1; i<N; ++i){
-        m = m_rpq[i].p + std::max(m, m_rpq[i].r);
-        c = std::max(c, m+m_rpq[i].q);
+        m = rpq_vec[i].p + std::max(m, rpq_vec[i].r);
+        c = std::max(c, m+rpq_vec[i].q);
     }
 
-    std::cout << m << '\n' << c << std::endl;
+    std::cout << c << std::endl;
 }
