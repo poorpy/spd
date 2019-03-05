@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 STD = "c++14"
 
 bin: main.cpp
