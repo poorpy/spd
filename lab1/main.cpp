@@ -114,7 +114,7 @@ void subset_sum(std::vector<rpq> rpq_vec, int target) {
 }
 
 void opt_alg_data2(std::vector<rpq> &rpq_vec, int n) {
-  std::vector<rpq> sorted_data(n);
+  std::vector<rpq> sorted_data;
   std::vector<rpq> right;
 
   auto tmp = std::max_element(rpq_vec.begin(), rpq_vec.end(), rq_sum_comp);
