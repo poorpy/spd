@@ -207,25 +207,25 @@ int main() {
 
     std::cout << "vec1:" << std::endl;
     for( auto item: vec1 ){
-        std::cout << item.id << '\n';
+        std::cout << item.id << ' ';
     }
     std::cout << '\n';
 
     std::cout << "vec2:" << std::endl;
     for( auto item: vec2 ){
-        std::cout << item.id << '\n';
+        std::cout << item.id << ' ';
     }
     std::cout << '\n';
 
     std::cout << "vec3:" << std::endl;
     for( auto item: vec3 ){
-        std::cout << item.id << '\n';
+        std::cout << item.id << ' ';
     }
     std::cout << '\n';
 
     std::cout << "vec4:" << std::endl;
     for( auto item: vec4 ){
-        std::cout << item.id << '\n';
+        std::cout << item.id << ' ';
     }
     std::cout << '\n';
 }
