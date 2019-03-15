@@ -79,13 +79,6 @@ void subset_sum_recursive(std::vector<rpq> rpq_vec, int target,
   }
 
   if (s == target) {
-    /* std::cout << "sum(["; */
-
-    /* for (auto cit = partial.begin(); cit != partial.end(); cit++) { */
-    /*   std::cout << (*cit).p << ","; */
-    /* } */
-
-    /* std::cout << "])=" << target << std::endl; */
     sum_found = true;
     left = partial;
   }
@@ -112,7 +105,6 @@ void subset_sum_recursive(std::vector<rpq> rpq_vec, int target,
 void subset_sum(std::vector<rpq> rpq_vec, int target) {
   subset_sum_recursive(rpq_vec, target, std::vector<rpq>());
 }
-
 void opt_alg_data2(std::vector<rpq> &rpq_vec, int n) {
   std::vector<rpq> sorted_data;
   std::vector<rpq> right;
@@ -124,29 +116,13 @@ void opt_alg_data2(std::vector<rpq> &rpq_vec, int n) {
 
   std::sort(rpq_vec.begin(), rpq_vec.end(), p_comp);
 
-  /* for (auto item : rpq_vec) { */
-  /*   std::cout << item.p << " "; */
-  /* } */
-
-  /* std::cout << std::endl; */
-  /* std::cout << required_sum << std::endl; */
   subset_sum(rpq_vec, required_sum);
-  // chuja z tym trzeba boosty includowac zeby te zipy dzialaly
-  // wyjeb z wektora wejściowego te bloczki króte użyte sa w subset_sum
   rpq_vec.erase(remove_if(begin(rpq_vec), end(rpq_vec),
                           [&](auto x) {
                             return find(begin(left), end(left), x) != end(left);
                           }),
                 end(rpq_vec));
   right = rpq_vec;
-// dupa debug printy zakomentowane w "sexy layout"
-  /* for (auto item : left) {
-   *   std::cout << item.p << " ";
-   * }
-   * std::cout << std::endl;
-   * for (auto item : right) {
-   *   std::cout << item.p << " ";
-   * } */
 
   // dodaj lewa strone bloczkow
   for (auto item : left) {
@@ -160,7 +136,7 @@ void opt_alg_data2(std::vector<rpq> &rpq_vec, int n) {
   rpq_vec = sorted_data;
 }
 
-void run_parallel(std::vector<rpq>& vec){
+void run_all(std::vector<rpq>& vec){
     std::vector<rpq> v1, v2, v3;
     v1 = vec;
     v2 = vec;
@@ -172,14 +148,6 @@ void run_parallel(std::vector<rpq>& vec){
     rq_sort(v1);
     qr_sort(v2);
     opt_alg_data2(v3, vec.size());
-
-    /* std::thread t1(rq_sort, std::ref(v1)); */
-    /* std::thread t2(qr_sort, std::ref(v2)); */
-    /* std::thread t3(opt_alg_data2, std::ref(v3), v3.size()); */
-
-    /* t1.join(); */
-    /* t2.join(); */
-    /* t3.join(); */
 
     auto c1 = calc_cmax(v1);
     auto c2 = calc_cmax(v2);
@@ -197,33 +165,33 @@ int main() {
     auto vec3 = read_to_vec("data.3", "rpq.data");
     auto vec4 = read_to_vec("data.4", "rpq.data");
 
-    run_parallel(vec1);
-    run_parallel(vec2);
-    run_parallel(vec3);
-    run_parallel(vec4);
+    run_all(vec1);
+    run_all(vec2);
+    run_all(vec3);
+    run_all(vec4);
 
     auto c_sum = calc_cmax(vec1) + calc_cmax(vec2) + calc_cmax(vec3) + calc_cmax(vec4);
     std::cout << c_sum << std::endl;
 
-    std::cout << "vec1:" << std::endl;
+    std::cout << "vec1: " << calc_cmax(vec1) << std::endl;
     for( auto item: vec1 ){
         std::cout << item.id << ' ';
     }
     std::cout << '\n';
 
-    std::cout << "vec2:" << std::endl;
+    std::cout << "vec2: " << calc_cmax(vec2) << std::endl;
     for( auto item: vec2 ){
         std::cout << item.id << ' ';
     }
     std::cout << '\n';
 
-    std::cout << "vec3:" << std::endl;
+    std::cout << "vec3: " << calc_cmax(vec3) << std::endl;
     for( auto item: vec3 ){
         std::cout << item.id << ' ';
     }
     std::cout << '\n';
 
-    std::cout << "vec4:" << std::endl;
+    std::cout << "vec4: " << calc_cmax(vec4) << std::endl;
     for( auto item: vec4 ){
         std::cout << item.id << ' ';
     }
