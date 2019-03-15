@@ -1,6 +1,8 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <list>
+#include <string>
 #include <vector>
 
 struct pwd {
@@ -12,11 +14,10 @@ std::vector<pwd> read_to_vec(std::string data_name, std::string file_name) {
   std::string str;
   std::fstream fs;
   fs.open(file_name);
-
   while (str != data_name) {
+  // std::cout<<"dupadebug"<<std::endl;
     fs >> str;
   }
-
   fs >> N;
   int id = 1;
   std::vector<pwd> pwd_vec(N);
@@ -29,4 +30,12 @@ std::vector<pwd> read_to_vec(std::string data_name, std::string file_name) {
   return pwd_vec;
 }
 
-int main() { auto vec1 = read_to_vec("data.10:", "witi.data.txt"); }
+int main() {
+  std::list<std::vector<pwd>> datalist;
+  for (int i = 10; i < 21; i++) {
+    std::string variable = "data." + std::to_string(i) + ":";
+    datalist.push_back(read_to_vec(variable, "witi.data.txt"));
+  }
+
+
+}
