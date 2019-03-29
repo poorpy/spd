@@ -1,0 +1,5 @@
+for i = 0 bit = 1, i< ilosc zadan; i++, bit << 1 (przesun o jeden)
+
+    if (set & bit != 0){
+    Cmax += P[i]
+    }
