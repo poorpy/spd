@@ -48,7 +48,23 @@ void print_data(std::vector<data>& vec){
     }
 }
 
+int calculate_cmax(std::vector<int> kolej, std::vector<data> &data) {
+  int machines = data[0].workTime.size();
+  int jobs = kolej.size();
+  std::vector<std::vector<int>> tab(machines, std::vector<int>(jobs));
+  for (int j = 0; j < jobs; ++j) {
+    for (int i = 0; i < machines; ++i) {
+      tab[i][j] = data[kolej[j]].workTime[i];
+      std::cout<< tab[i][j]<<" ";
+    }
+    std::cout<<std::endl;
+  }
+  return 0;
+}
+
 int main() {
   auto vec1 = read_to_vec("data.000:", "neh.data");
-  print_data(vec1);
+  // print_data(vec1);
+  std::vector<int> kolejnosc = {1, 2, 3, 4};
+  int o = calculate_cmax(kolejnosc,vec1);
 }
