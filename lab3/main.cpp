@@ -6,13 +6,16 @@
 #include <vector>
 
 struct data {
-  std::vector<int> workTime;
   /* workTime - czas obrabiania na maszynie */
-  int id;
+  std::vector<int> work_time;
+  int id=0;
+  data(){}
+  data(int number_of_machines, int id=0){work_time = std::vector<int>(number_of_machines); this->id = id; }
 };
 
 std::vector<data> read_to_vec(std::string data_name, std::string file_name) {
-  int N, machineNumber;
+  int number_of_problems, number_of_machines;
+  int id = 1;
   std::string str;
   std::fstream fs;
   fs.open(file_name);
@@ -21,30 +24,28 @@ std::vector<data> read_to_vec(std::string data_name, std::string file_name) {
     fs >> str;
   }
 
-  fs >> N >> machineNumber;
-  int id = 1;
-  std::vector<data> data_vec(N);
-  for (int i = 0; i < N; ++i) {
-    for (int j = 0; j < machineNumber; ++j) {
-      int tmp;
-      fs >> tmp;
-      data_vec[i].workTime.push_back(tmp);
-    }
-    data_vec[i].id = id;
-    ++id;
+  fs >> number_of_problems >> number_of_machines;
+  std::vector<data> data_vec(number_of_problems);
+  for (auto& problem: data_vec){
+      problem = data(number_of_machines, id);
+      ++id;
+      for (auto& machine: problem.work_time){
+          fs >> machine;
+      }
   }
 
   return data_vec;
 }
 
-void print_data(std::vector<data> &vec1) {
-  for (auto &iter : vec1) {
-    std::cout << "id: " << iter.id << std::endl;
-    for (int i = 0; i < iter.workTime.size(); ++i) {
-      std::cout << iter.workTime.at(i) << " ";
+void print_data(std::vector<data>& vec){
+    std::cout << "vec size: " << vec.size() << std::endl;
+    std::cout << "machine size: " << vec[0].work_time.size() << std::endl << std::endl;
+    for (auto& problem: vec){
+        for (auto& machine: problem.work_time){
+            std::cout << machine << " ";
+        }
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
-  }
 }
 
 int main() {
