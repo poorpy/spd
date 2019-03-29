@@ -25,7 +25,7 @@ std::vector<data> read_to_vec(std::string data_name, std::string file_name) {
   int id = 1;
   std::vector<data> data_vec(N);
   for (int i = 0; i < N; ++i) {
-    for (int j = 0; j < machineNumber; ++i) {
+    for (int j = 0; j < machineNumber; ++j) {
       int tmp;
       fs >> tmp;
       data_vec[i].workTime.push_back(tmp);
@@ -37,8 +37,17 @@ std::vector<data> read_to_vec(std::string data_name, std::string file_name) {
   return data_vec;
 }
 
-int main() { auto vec1 = read_to_vec("data.000:", "neh.data"); 
-for (auto &iter :vec1){
+void print_data(std::vector<data> &vec1) {
+  for (auto &iter : vec1) {
+    std::cout << "id: " << iter.id << std::endl;
+    for (int i = 0; i < iter.workTime.size(); ++i) {
+      std::cout << iter.workTime.at(i) << " ";
+    }
+    std::cout << std::endl;
+  }
+}
 
-std:cout<< iter.id}
+int main() {
+  auto vec1 = read_to_vec("data.000:", "neh.data");
+  print_data(vec1);
 }
