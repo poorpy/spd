@@ -40,7 +40,7 @@ std::vector<data> read_to_vec(std::string data_name, std::string file_name) {
 void print_data(std::vector<data> &vec1) {
   for (auto &iter : vec1) {
     std::cout << "id: " << iter.id << std::endl;
-    for (int i = 0; i < iter.workTime.size(); ++i) {
+    for (int i = 0; i < (int)iter.workTime.size(); ++i) {
       std::cout << iter.workTime.at(i) << " ";
     }
     std::cout << std::endl;
@@ -50,4 +50,5 @@ void print_data(std::vector<data> &vec1) {
 int main() {
   auto vec1 = read_to_vec("data.000:", "neh.data");
   print_data(vec1);
+  std::vector<int> kolejnosc = {1, 2, 3, 4};
 }
