@@ -109,7 +109,7 @@ std::vector<int> find_perm(std::vector<data> &data) {
 }
 
 int main() {
-  for (int i = 0; i < 120; ++i) {
+  for (int i = 0; i < 90; ++i) {
     // std::string ind = std::to_string(i);
     std::stringstream s;
     s << std::setfill('0') << std::setw(3) << i;
