@@ -281,6 +281,7 @@ std::vector<int> find_perm(std::vector<data> &data) {
 }
 
 int main() {
+  // dupas
   for (int i = 1; i < 121; ++i) {
     // std::string ind = std::to_string(i);
     std::stringstream s;
