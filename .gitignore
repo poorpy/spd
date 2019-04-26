@@ -2,5 +2,6 @@
 !*.cpp
 !\.gitignore
 !*.hpp
+!lab*
 !makefile
 !Makefile

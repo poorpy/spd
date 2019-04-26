@@ -45,6 +45,25 @@ std::vector<data> read_to_vec(std::string data_name, std::string file_name) {
   return data_vec;
 }
 
+
+int read_neh(std::string data_name, std::string file_name) {
+    int ret;
+    std::string str;
+    std::fstream fs;
+    fs.open(file_name);
+
+    while (str != data_name) {
+        fs >> str;
+    }
+
+    while (str != "neh:") {
+        fs >> str;
+    }
+
+    fs >> ret;
+    return ret;
+}
+
 void print_data(std::vector<data> &vec) {
   std::cout << "vec size: " << vec.size() << std::endl;
   std::cout << "machine size: " << vec[0].work_time.size() << std::endl
@@ -100,7 +119,6 @@ std::vector<std::vector<int>> graph_right(std::vector<int> &perm,
     for (int j = 1; j < kol; ++j) {
       arr[i][j] = std::max(data[perm.at(j) - 1].work_time[i] + arr[i][j - 1],
                            data[perm.at(j) - 1].work_time[i] + arr[i - 1][j]);
-      // std::cout << arr[i][j] << " ";
     }
   }
   return arr;
@@ -222,22 +240,6 @@ std::vector<int> quick(std::vector<data> &data) {
         std::min_element(cmaxx.begin(), cmaxx.end()) - cmaxx.begin();
     perm.insert(perm.begin() + maxElementIndex, to_insert.id);
 
-    // std::cout << std::endl;
-    // print_graph(right);
-    // std::cout << std::endl;
-    // print_graph(left);
-    // std::cout << "cmax:\n";
-    //
-    // for (auto item : cmaxx) {
-    //   std::cout << item << " ";
-    // }
-    // std::cout << "\n";
-    // std::cout << "perm:\n";
-    //
-    // for (auto item : perm) {
-    //   std::cout << item << " ";
-    // }
-    // std::cout << "\n";
   }
   // for ilosc maszyn
   // policz prawą stronę
@@ -248,10 +250,6 @@ std::vector<int> quick(std::vector<data> &data) {
   // sprawdz cmax w wierszach z zadaniem
 
   // wybierz najlepszą kolumnę (cmax najniższy)
-  std::cout << "perm end:\n";
-  for (auto item : perm) {
-    std::cout << item << " ";
-  }
   return perm;
 }
 
@@ -280,32 +278,25 @@ std::vector<int> find_perm(std::vector<data> &data) {
   return perm;
 }
 
-int main() {
-  // dupas
-  for (int i = 1; i < 121; ++i) {
-    // std::string ind = std::to_string(i);
-    std::stringstream s;
-    s << std::setfill('0') << std::setw(3) << i;
-    std::string ind = s.str();
-    std::cout << ind;
-    std::vector<data> data = read_to_vec("data." + ind + ":", "neh.data");
-    // std::sort(sorted.begin(), sorted.end(), [=](auto left, auto right) ->
-    // bool {
-    //   return left.weight > right.weight;
-    // });
 
-    std::vector<int> dupa = quick(data);
-    std::cout << std::endl;
-    // std::vector<int> perm = {0, 3, 2, 1};
-    // auto perm = find_perm(vec);
-    // std::cout << "Dataset: 00" << ind << " Cmax: " << calc_cmax(perm, vec)
-    //           << "\nPerm: ";
-    // for (auto item : perm) {
-    //   std::cout << item << " ";
-    // }
-    // std::cout << std::endl << std::endl;
-  }
-  // print_data(vec1);
-  /* std::vector<int> kolejnosc = {1, 2, 3, 4}; */
-  /* std::cout << calc_cmax(kolejnosc,vec1) << std::endl; */
+int main() {
+    for (int i = 1; i < 121; ++i) {
+        std::stringstream s;
+        s << std::setfill('0') << std::setw(3) << i;
+        std::string ind = s.str();
+        std::vector<data> data = read_to_vec("data." + ind + ":", "neh.data");
+        std::vector<int> perm = quick(data);
+        int cmax = calc_cmax(perm, data);
+
+        std::cout << "data." << ind << std::endl;
+        std::cout << "cmax: " << cmax << std::endl;
+        std::cout << "perm: " << std::endl;
+        for (const auto& item: perm) {
+            std::cout << item << " ";
+        }
+
+        std::cout << std::endl;
+        std::cout << std::endl;
+    }
+
 }
