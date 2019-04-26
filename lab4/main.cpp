@@ -20,7 +20,6 @@ std::vector<data> read_to_vec(std::string data_name, std::string file_name) {
   while (str != data_name) {
     fs >> str;
   }
-
   fs >> N;
   int id = 1;
   std::vector<data> rpq_vec(N);
@@ -34,13 +33,13 @@ std::vector<data> read_to_vec(std::string data_name, std::string file_name) {
 }
 
 int main() {
-  for (int i = 1; i < 121; ++i) {
+  for (int i = 0; i <= 8; ++i) {
     // std::string ind = std::to_string(i);
     std::stringstream s;
     s << std::setfill('0') << std::setw(3) << i;
     std::string ind = s.str();
     std::cout << ind;
-    std::vector<data> data = read_to_vec("data." + ind + ":", "neh.data");
+    std::vector<data> data = read_to_vec("data." + ind + ":", "schr.data");
     std::cout << std::endl;
   }
 }
