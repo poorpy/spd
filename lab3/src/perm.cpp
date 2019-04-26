@@ -1,8 +1,8 @@
 #include "../inc/perm.hpp"
 #include <fstream>
 
-int calc_cmax(const std::vector<int>& perm, const std::vector<data>& data){
-    std::vector<int> addr(data.size()+1);
+int calc_cmax(const ivec& perm, const dvec& data){
+    ivec addr(data.size()+1);
     int ind = 0;
     for (const auto& item: data) {
         addr[item.id] = ind;
@@ -11,9 +11,8 @@ int calc_cmax(const std::vector<int>& perm, const std::vector<data>& data){
     return calc_cmax(perm, data, addr);
 }
 
-int calc_cmax(const std::vector<int>& perm, const std::vector<data>& data,
-        const std::vector<int>& addr){
-    std::vector<int> cmax = std::vector<int>(data[0].work_time.size(), 0);
+int calc_cmax(const ivec& perm, const dvec& data, const ivec& addr){
+    ivec cmax = ivec(data[0].work_time.size(), 0);
     for (const auto& job_id: perm){
         // Wykres na pierwszej maszynie zawsze dosunięty w lewo
         cmax[0] += data[addr.at(job_id)].work_time[0];
@@ -30,14 +29,14 @@ int calc_cmax(const std::vector<int>& perm, const std::vector<data>& data,
 }
 
 
-std::vector<int> find_perm(const std::vector<data>& data){
-    std::vector<int> ind_vec(data.size()+1);
+ivec find_perm(const dvec& data){
+    ivec ind_vec(data.size()+1);
     int addr = 0;
     for (const auto& item: data) {
         ind_vec[item.id] = addr;
         ++addr;
     }
-    std::vector<int> perm;
+    ivec perm;
 
     for (auto i=0; i<data.size(); ++i){
         int opt_ind = 0, cmax=999999;
@@ -78,15 +77,15 @@ std::vector<int> find_perm(const std::vector<data>& data){
 }
 
 
-/* std::vector<int> find_perm(const std::vector<data>& data){ */
-/*     std::vector<int> ind_vec(data.size()+1); */
+/* ivec find_perm(const dvec& data){ */
+/*     ivec ind_vec(data.size()+1); */
 /*     int addr = 0; */
 /*     for (const auto& item: data) { */
 /*         ind_vec[item.id] = addr; */
 /*         ++addr; */
 /*     } */
 
-/*     std::vector<int> perm; */
+/*     ivec perm; */
 /*     perm.reserve(data.size()); */
 /*     auto counter = 0; */
 /*     auto opt_ind = 0; */
