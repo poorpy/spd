@@ -47,7 +47,7 @@ std::vector<ivec> graph_left(const ivec& perm, const dvec& data) {
     for (auto i = row - 1; i >= 0; --i) {
         for (auto j = col - 1; j >= 0; --j) {
             arr[i][j] = std::max(data[perm.at(j) - 1].work_time[i] + arr[i][j + 1],
-                                 data[perm.at(j) - 1].work_time[i] + arr[i + 1][j]);
+                    data[perm.at(j) - 1].work_time[i] + arr[i + 1][j]);
         }
     }
 
@@ -64,11 +64,64 @@ ivec quick(const dvec& data) {
         std::swap(perm[0], perm[1]);
     }
 
-    for (auto i = 0; i < perm.size(); ++i) {
-        if (i != 0 and i != perm.size()) {
+    for (auto iter = data.begin()+2, end = data.end(); iter != end; ++iter) {
+        auto right = graph_right(perm, data);
+        auto left  = graph_left(perm, data);
+        std::vector<int> cmaxx;
+        for (auto i = 0UL; i < perm.size() + 1; ++i) {
+            if (i != 0 and i != perm.size()) {
+                int tmp = 0;
+                int cmax = 0;
+                for (auto j = 0UL; j < iter->work_time.size(); ++j) {
+                    if (j != 0) {
+                        tmp = std::max(right[j][i-1], tmp) + iter->work_time[j];
+                        cmax = std::max(cmax, tmp + left[j][i]);
+                    } else {
+                        tmp = right[j][i-1] + iter->work_time[j];
+                        cmax = tmp + left[j][i];
+                    }
+                }
+                cmaxx.push_back(cmax);
+            } else if (i == 0) {
+                int tmp = 0;
+                int cmax = 0;
+                for (auto j = 0UL; j < iter->work_time.size(); ++j) {
+                    // TODO:
+                    // jeśli j = 0 to tmp = 0
+                    // jeśli j = 0 to cmax = 0
+                    // więc oba można uprościć do ogólnej postaci
+                    if (j != 0) {
+                        tmp = iter->work_time[j];
+                        cmax = std::max(cmax, tmp + left[j][i]);
+                    } else {
+                        tmp = iter->work_time[j];
+                        cmax = tmp + left[j][i];
+                    }
+                }
+                cmaxx.push_back(cmax);
+            } else {
+                // ostatni element
+                int tmp = 0;
+                for (auto j = 0UL; j < iter->work_time.size(); ++j) {
+                    if (j == 0) {
+                        tmp = iter->work_time[j] + right[j][i - 1];
+                    } else {
+                        tmp = std::max(right[j][i - 1], tmp) + iter->work_time[j];
+                    }
+                }
+                cmaxx.push_back(tmp);
+            }
 
         }
     }
+
+    /* for (auto i = 0; i < perm.size(); ++i) { */
+    /*     if (i != 0 and i != perm.size()) { */
+    /*         int cmax = 0; */
+    /*         int tmp = 0; */
+    /*         for (auto j = 0; j < ) */
+    /*     } */
+    /* } */
 
     return perm;
 }
