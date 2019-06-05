@@ -6,23 +6,25 @@
 #include "inc/heap.hpp"
 
 int main() {
-/*    for (int i=0; i<9; ++i) {
+    for (int i=0; i<1; ++i) {
         std::stringstream s;
         s << std::setfill('0') << std::setw(3) << i;
 
         std::string ind = s.str();
-        auto vec = read_to_vec("data."+ind+":", "schr.data");
-        auto ans = schrage(vec);
-
-        std::cout << "prt Schrage: " << prt_schrage(vec) << std::endl;
-
-        std::cout << "Schrage: " << calc_cmax(ans, vec) << std::endl;
-        for (auto const& item : ans) {
-            std::cout << item << " ";
+        auto vec = read_to_vec("data."+ind+":", "carl.data");
+        for (const auto& item: vec) {
+            std::cout << item.id << std::endl;
         }
-        std::cout << std::endl;
-        std::cout << std::endl;
+        /* auto ans = schrage(vec); */
+
+        /* std::cout << "prt Schrage: " << prt_schrage(vec) << std::endl; */
+
+        /* std::cout << "Schrage: " << calc_cmax(ans, vec) << std::endl; */
+        /* for (auto const& item : ans) { */
+        /*     std::cout << item << " "; */
+        /* } */
+        /* std::cout << std::endl; */
+        /* std::cout << std::endl; */
     }
-*/
 
 }
