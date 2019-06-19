@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <numeric>
 #include <optional>
+#include <iostream>
 
 typedef std::pair<rpq&, int> pri;
 
@@ -27,13 +28,18 @@ int find_b(const ivec& perm, const rpq_vec& data) {
     return -1;
 }
 
-int find_a(const ivec& perm, const rpq_vec& data,const int b) {
+int find_a(const ivec& perm, const rpq_vec& data, const int b) {
+    /* std::cout << "Perm: " << std:: */
     auto cmax = calc_cmax(perm, data);
-    /* std::cout << "cmax_a: " << cmax << std::endl; */
+    for (auto item: perm) {
+        std::cout << item << std::endl;
+    }
+    std::cout << "cmax_a: " << cmax << std::endl;
     for (auto ind=0; ind <= b; ++ind) {
         auto val = data[perm[ind]-1].r
             + sum_p(data, perm.begin()+ind, perm.begin()+b+1)
             + data[perm[b]-1].q;
+    std::cout << "val: " << val << std::endl;
         if (val == cmax) {
             return ind;
         }
@@ -54,7 +60,6 @@ std::optional<int> find_c(const ivec& perm, const rpq_vec& data,
 }
 
 ivec carlier(rpq_vec& data, int UB) {
-    auto vec = data;
     auto pi = schrage(data); // at this point data == vec -> true
     auto U = calc_cmax(pi, data);
     ivec pi_opt = {};
@@ -64,9 +69,13 @@ ivec carlier(rpq_vec& data, int UB) {
         pi_opt = pi;
     }
 
+    std::cout << std::endl;
     auto b = find_b(pi, data);
+    std::cout << "B: " << b << std::endl;
     auto a = find_a(pi, data, b);
+    std::cout << "A: " << a << std::endl;
     auto c = find_c(pi, data, a, b);
+    std::cout << std::endl;
 
     if (!c) {
         return pi_opt;

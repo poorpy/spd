@@ -6,7 +6,7 @@
 #include "inc/carlier.hpp"
 
 int main() {
-    for (int i=0; i<9; ++i) {
+    for (int i=1; i<2; ++i) {
         std::stringstream s;
         s << std::setfill('0') << std::setw(3) << i;
 
@@ -16,7 +16,7 @@ int main() {
 
         std::cout << "Cmax: " << calc_cmax(pi_opt, vec) << std::endl;
         for (const auto& item : pi_opt) {
-            std::cout << item << " ";
+            std::cout << item-1 << " ";
         }
             std::cout << std::endl;
 
